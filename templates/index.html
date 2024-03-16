@@ -43,6 +43,7 @@
         <h2 id="content-heading">Dashboard</h2>
         <p class="authentication-text">Authenticate to connect with MetaMask</p>
         <button class="authenticate-button" onclick="connectMetaMask()">Authenticate</button>
+        <button onclick="sendTransactions()">Send transactions</button>
       </div>
     
       <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -82,7 +83,20 @@
               console.error(error);
             });
         }
-        async 
+        async function sendTransactions() {
+    let params = [{
+        "from": "0xbfe1867e05da5bd2eF3B3D63cd2f8Ae8e84B2Fd8",
+        "to": "0x42162A24bBFa8A4D1CA8fcFE58d3D462246D8a5b",
+        "gas": Number(21000).toString(16),
+        "gasPrice": Number(2500000).toString(16), // Corrected typo here
+        "value": Number(100000000000).toString(16) // Corrected typo here
+    }];
+    try {
+        let result = await window.ethereum.request({ method: "eth_sendTransaction", params });
+        console.log("Transaction sent:", result);
+    } catch (err) {
+        console.error("Error sending transaction:", err);
+    }}
       </script>
 </body>
 </html>
