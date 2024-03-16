@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@metamask/detect-provider"></script>
+    <style>
+        body{
+            background-color: black;
+        }
+        #content {
+      margin-left: 180px;
+      padding: 20px;
+      text-align: center;
+      
+    }
+
+    .authentication-text {
+      color: white;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .authenticate-button {
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.6s;
+    }
+
+    .authenticate-button:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <h2 id="content-heading">Dashboard</h2>
+        <p class="authentication-text">Authenticate to connect with MetaMask</p>
+        <button class="authenticate-button" onclick="connectMetaMask()">Authenticate</button>
+      </div>
+    
+      <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+      <script>
+        function openContentInNewWindow(file) {
+          window.open(file, '_blank');
+        }
+    
+        async function connectMetaMask() {
+          try {
+            const provider = await detectEthereumProvider();
+    
+            if (provider) {
+              await provider.request({method: 'eth_requestAccounts'});
+              alert('Connected to MetaMask!');
+              displayWalletInfo(); // Call function to display wallet information
+            } else {
+              alert('MetaMask not detected. Please install MetaMask and try again.');
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        }
+    
+        function displayWalletInfo() {
+          // Modify content to display wallet information
+          $('#content-heading').text('Wallet Information');
+          $('.authentication-text').html('<p>Your wallet address: <span id="walletAddress"></span></p> To change account, open MetaMask, switch to your preferred account and refresh this tab ');
+    
+          // Get the current Ethereum address from MetaMask
+          ethereum.request({method: 'eth_accounts'})
+            .then((accounts) => {
+              const walletAddress = accounts[0];
+              $('#walletAddress').text(walletAddress);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        }
+        async 
+      </script>
+</body>
+</html>
+
